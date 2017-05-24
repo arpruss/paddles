@@ -16,8 +16,8 @@ void loop() {
   for (int i=0; i<2; i++) {
     uint8_t d = analogRead(i) >> 3;
     Serial.write(hexNibble(d>>4));
-    Serial.write(hexNibble(d&f));
+    Serial.write(hexNibble(d&0xF));
   }
-  delay(4);
+  delay(5);
 }
 
