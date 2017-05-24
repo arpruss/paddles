@@ -1,14 +1,23 @@
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(230400);
-  
+  Serial.begin(230400);  
+  pinMode(0, INPUT_PULLUP);
+  pinMode(1, INPUT_PULLUP);
+}
+
+char hexNibble(uint8_t x) {
+  return x < 10 ? x+'0' : x+('A'-10);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  int datum = analogRead(0);
-  Serial.println(String("L")+datum);
-  datum = analogRead(1);
-  Serial.println(String("R")+datum);
+  Serial.write(':');
+  Serial.write('0'+digitalRead(0));
+  Serial.write('1'+digitalRead(1));
+  for (int i=0; i<2; i++) {
+    uint8_t d = analogRead(i) >> 3;
+    Serial.write(hexNibble(d>>4));
+    Serial.write(hexNibble(d&f));
+  }
+  delay(4);
 }
 
